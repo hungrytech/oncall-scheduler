@@ -1,0 +1,27 @@
+{
+  "name": "on-call-schduler",
+  "version": "1.0.0",
+  "main": "index.tx",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "taekmin.lee",
+  "license": "ISC",
+  "description": "oncall pair scheduler",
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
+  },
+  "dependencies": {
+    "axios": "^1.8.2"
+  }
+}
