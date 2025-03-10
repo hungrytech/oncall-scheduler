@@ -1,8 +1,10 @@
 name: Oncall Pair Alarm Bot
 
 on:
-  schedule:
-    - cron: "* * * * *" # 매 분마다 실행
+  push:
+    branches:
+      - master
+
 
 
 jobs:
