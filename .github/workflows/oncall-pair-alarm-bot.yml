@@ -1,0 +1,44 @@
+name: Oncall Pair Alarm Bot
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+
+
+jobs:
+  oncall-pair-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm  # npm 캐시 경로
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-cache-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci  # 캐시를 활용하면서 패키지 설치
+
+      - name: Run Sliding OnCall Pair Bot
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: npx tsx src/index.ts
+
+      # 변경된 state.json 커밋 및 푸시
+      - name: Commit and push updated state.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update on call pair state"
+          file_pattern: ".state.json"
+          commit_user_name: "hungrytech"
+          commit_user_email: "xorals9448@gmail.com"

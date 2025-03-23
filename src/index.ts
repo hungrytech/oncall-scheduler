@@ -1,8 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from "url";
-import axios from 'axios';
-import OnCallPair from './dto'
+import ky from 'ky';
+
+interface OnCallPair {
+    first: string;
+    second: string;
+}
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -46,11 +50,11 @@ async function sendToSlack(): Promise<void> {
     const nextPair = getNextPair(loadState());
 
     const payload = {
-        text: `요번주 페어는: ${nextPair.first} & ${nextPair.second} 입니다!`,
+        text: `요번주 페어는: <@${nextPair.first}> & <@${nextPair.second}> 입니다!`,
     };
 
     try {
-        await axios.post(webhookUrl, payload);
+        await ky.post(webhookUrl, {json: payload})
         console.log(`메시지 전송 성공: ${nextPair.first} & ${nextPair.second}`);
 
         saveState(nextPair);
