@@ -1,8 +1,9 @@
 name: Oncall Pair Alarm Bot
 
 on:
-  schedule:
-    - cron: '0 4 * * 1'
+  push:
+    branches:
+      - develop
 
 
 jobs:
